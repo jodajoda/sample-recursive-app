@@ -5,8 +5,12 @@ import hu.example.samplerecursiveapp.search.service.HistoryService;
 import hu.example.samplerecursiveapp.search.service.SearchService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -14,17 +18,17 @@ import java.util.Set;
 @AllArgsConstructor
 public class SearchController {
 
-    private SearchService searchService;
-    private HistoryService historyService;
+    private final SearchService searchService;
+    private final HistoryService historyService;
 
     @GetMapping("/getUnique")
-    public ResponseEntity<Set<String>> getUnique(@RequestParam String folderName) {
-        return ResponseEntity.ok(searchService.getUniqueFileNames(folderName));
+    public ResponseEntity<Set<String>> getUnique(@RequestParam String directoryName) {
+        return ResponseEntity.ok(searchService.getUniqueFileNames(directoryName));
     }
 
     @GetMapping("history")
-    public ResponseEntity<HistoryDto> history(@RequestParam String folderName) {
-        return ResponseEntity.ok(historyService.getHistory());
+    public ResponseEntity<List<HistoryDto>> history(@RequestParam String directoryName) {
+        return ResponseEntity.ok(historyService.getHistory(directoryName));
     }
 
 }

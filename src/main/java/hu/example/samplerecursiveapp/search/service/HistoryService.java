@@ -5,19 +5,35 @@ import hu.example.samplerecursiveapp.search.entity.History;
 import hu.example.samplerecursiveapp.search.repository.HistoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+import static java.lang.System.getProperty;
+import static java.time.ZonedDateTime.now;
 
 @Service
 @RequiredArgsConstructor
 public class HistoryService {
 
-    private HistoryRepository historyRepository;
+    public static final String USER_NAME_PROPERTY = "user.name";
+    private final HistoryRepository historyRepository;
 
-    public HistoryDto getHistory() {
-        //TODO
-        return historyRepository.findAll().stream()
+    @Transactional
+    public List<HistoryDto> getHistory(String searchCondition) {
+        return historyRepository.findAllBySearchConditions(searchCondition)
                 .map(this::toHistoryDto)
-                .findFirst()
-                .get();
+                .toList();
+    }
+
+    public void saveHistory(String directoryName) {
+        History history = new History();
+
+        history.setName(getProperty(USER_NAME_PROPERTY));
+        history.setSearchConditions(directoryName);
+        history.setSearchTime(now());
+
+        historyRepository.save(history);
     }
 
     private HistoryDto toHistoryDto(History history) {
