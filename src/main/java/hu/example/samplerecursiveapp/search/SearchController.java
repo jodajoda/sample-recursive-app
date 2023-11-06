@@ -21,8 +21,8 @@ public class SearchController {
     private final SearchService searchService;
     private final HistoryService historyService;
 
-    @GetMapping("/getUnique")
-    public ResponseEntity<Set<String>> getUnique(@RequestParam String directoryName) {
+    @GetMapping("/getUniqueFileNames")
+    public ResponseEntity<Set<String>> getUniqueFileNames(@RequestParam String directoryName) {
         return ResponseEntity.ok(searchService.getUniqueFileNames(directoryName));
     }
 
