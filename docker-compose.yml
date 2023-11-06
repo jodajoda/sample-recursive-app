@@ -12,7 +12,7 @@ services:
     ports:
       - '5432:5432'
 
-  recipe:
+  sample_app_1:
     container_name: sample_app
     build:
       context: .
