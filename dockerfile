@@ -1,4 +1,5 @@
-FROM openjdk:11
+FROM openjdk:17
+VOLUME /tmp
 EXPOSE 8080
-COPY target/*.jar app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+COPY target/sample-recursive-app-0.0.1-SNAPSHOT.jar sample-app.jar
+ENTRYPOINT ["java","-jar","/sample-app.jar"]
