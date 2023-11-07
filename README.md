@@ -1,6 +1,6 @@
 # Search application
 
-With this application, you can list the files in the specified directories from the server's directories.
+With this application, you can list the unique file names in the specified directories from the server's directories.
 
 * Starts two instance of the app
 * Uses Postgres database
